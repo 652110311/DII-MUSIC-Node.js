@@ -7,7 +7,7 @@ import Login from "./features/login/Login";
 import Address from "./features/payment/Address";
 import Create from "./features/login/Create";
 import UserCart from "./features/Cart/Content/user/UserCart";
-import Admin from "./features/Admin";
+import Admin from "./features/Admin";//
 
 function App() {
   const urlProduct = `https://crudcrud.com/api/eaba865638ff4ee49f03d314906b56ab/product/65192952b987ad03e876d609`;
