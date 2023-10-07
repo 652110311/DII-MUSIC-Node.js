@@ -13,8 +13,8 @@ import Admin from "./features/Admin";//
 
 function App() {
   const urlProduct = `http://localhost:5000/products`;
-  const url = `https://crudcrud.com/api/3aa010302a9a4f1f9d33d1441b7806f9/user`;
-  const urlAddmin = `https://crudcrud.com/api/3aa010302a9a4f1f9d33d1441b7806f9/user/65212670b987ad03e876ece3`;
+  const url = `http://localhost:5000/users`;
+  const urlAddmin = `http://localhost:5000/users/1`;
   const [user, setUser] = useState("");
   const [addmin, setAddmin] = useState([]);
   const [products, setProducts] = useState([]);

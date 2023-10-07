@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const productRoutes = require('./routes/products');
+const userRoutes = require('./routes/users')
 const { connect , sync } = require('./config/database')
 
 // Setting up middleware
@@ -22,6 +23,7 @@ app.use((req,res,next)=>{
 
 // Setting up routes
 app.use('/products', productRoutes);
+app.use('/users', userRoutes);
 
 
 // Creating a server
