@@ -12,9 +12,9 @@ import Admin from "./features/Admin";//
 //testcommit
 
 function App() {
-  const urlProduct = `https://crudcrud.com/api/eaba865638ff4ee49f03d314906b56ab/product/65192952b987ad03e876d609`;
-  const url = `https://crudcrud.com/api/eaba865638ff4ee49f03d314906b56ab/user`;
-  const urlAddmin = `https://crudcrud.com/api/eaba865638ff4ee49f03d314906b56ab/user/65192a4bb987ad03e876d60a`;
+  const urlProduct = `http://localhost:5000/products`;
+  const url = `https://crudcrud.com/api/3aa010302a9a4f1f9d33d1441b7806f9/user`;
+  const urlAddmin = `https://crudcrud.com/api/3aa010302a9a4f1f9d33d1441b7806f9/user/65212670b987ad03e876ece3`;
   const [user, setUser] = useState("");
   const [addmin, setAddmin] = useState([]);
   const [products, setProducts] = useState([]);
@@ -24,8 +24,9 @@ function App() {
       const products = await axios.get(urlProduct);
       const addmin = await axios.get(urlAddmin);
       setAddmin(addmin.data);
-      setProducts(products.data.product);
-      console.log(user);
+      setProducts(products.data);
+      console.log(products);
+      console.log('testtu')
     }
     getProducts();
   }, []);

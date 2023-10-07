@@ -8,12 +8,12 @@ const dataProduct = [
     imageURL: "G1.png",
     sound: "guitar.mp3",
     description: {
-      product:
+      "product":
         "This Yamaha acoustic guitar is considered the best-selling top hit model of all time. With a design that has a standard design and fits every body. Because it is a Japanese brand guitar, it is specially designed for Asian people. The body is comfortable to hold It also has a black glossy edge trim that makes the body stand out even more. As for the sound of this model, it is resonant, so it is suitable for people who like to play chords and are very beginners as it is a Yamaha brand that produces a wide range of musical instruments. Therefore, you can be confident about the quality that is definitely worth the price.",
-      brand: "Yamaha",
-      series: "Yamaha F310",
-      color: "Black,White",
-      note: "",
+      "brand": "Yamaha",
+      "series": "Yamaha F310",
+      "color": "Black,White",
+      "note": "",
     },
   },
   {
