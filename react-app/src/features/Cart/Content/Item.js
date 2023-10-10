@@ -1,35 +1,69 @@
 import React, { Fragment, useState, useEffect, useReducer } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-function Item({userId,addminId,orderId,item,status,editCart,deleteCart,products,total,className}) {
+function Item({userId,addminId,item,setCart,deleteItem,status,editCart,className}) {
 
-  const product = products.find(product => product.id === item.productId);
-  const productImage = require(`../../../assets/${product.imageURL}`);
+  const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(item.quantity);
+  // const [productImage, setProductImage] = useState([]);
   
-  const addQuantity = () => {
-    const newTotal = total+product.price;
-    console.log("ttt")
-    console.log(product.price)
-    console.log(total)
-    console.log(newTotal);
-    setQuantity(quantity + 1);
-    editCart(item.productId,quantity+1,newTotal)
+
+  useEffect(() => {
+    async function getProduct() {
+      const products = await axios.get(`http://localhost:5000/products/${item.productId}`);
+      setProduct(products.data)
+      console.log(product)
+      // const getImage = require(`../../../assets/${product.imageURL}`);
+      // setProductImage(getImage);
+     
+    }
+    getProduct();
+  }, [item]);
+
+ 
+  
+  async function addQuantity (event){
+    event.preventDefault();
+    try{
+      
+      const getOrder = await axios.get(`http://localhost:5000/cart/${item.id}`);
+      const order = getOrder.data;
+      const {id,productId,quantity,price} = order;
+      const newOrder = {productId:productId,quantity:quantity+1,price:price+item.price}
+      await axios.put(`http://localhost:5000/cart/${id}`, newOrder);
+      const getCart = await axios.get(`http://localhost:5000/cart`);
+      setCart(getCart)
+
+      }catch(error){
+        console.error(`error delete cart in : ${error}`)
+      }
   };
 
-  function deleteItem (){
-    const newTotal = total-product.price;
-    deleteCart(orderId,item.productId,newTotal)
+  async function deleteItem (){
+    try{
+    await axios.delete(`http://localhost:5000/cart/${item.id}`)
+    const newCart = await axios.get(`http://localhost:5000/cart`)
+    setCart(newCart)
+    }catch(error){
+      console.error(`error delete cart in : ${error}`)
+    }
   }
 
-  const deleteQuantity = () => {
-    const newTotal = total-product.price;
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-      editCart(item.productId,quantity-1,newTotal)
-    }else{
-      deleteCart(orderId,item.productId,newTotal)
-    }
+  async function deleteQuantity(event){
+    try{
+      event.preventDefault();
+      const getOrder = await axios.get(`http://localhost:5000/cart/${item.id}`);
+      const order = getOrder.data;
+      const {id,productId,quantity,price} = order;
+      const newOrder = {productId:productId,quantity:quantity-1,price:price-item.price}
+      await axios.put(`http://localhost:5000/cart/${id}`, newOrder);
+      const getCart = await axios.get(`http://localhost:5000/cart`);
+      setCart(getCart)
+
+      }catch(error){
+        console.error(`error delete cart in : ${error}`)
+      }
   };
 
   return (
@@ -37,7 +71,7 @@ function Item({userId,addminId,orderId,item,status,editCart,deleteCart,products,
     <div className={className}>
       <li className="item">
         <div className="left-item">
-            <img className="pic"  src={productImage} alt={item.name}/>
+            <img className="pic"  src={product.imageURL} alt={product.name}/>
             <div className="description">
               <p className="name-product">{product.name}</p>
             </div>

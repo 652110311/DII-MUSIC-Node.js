@@ -7,6 +7,15 @@ router.get('/', async (req, res) => {
     res.send(products);
 });
 
+router.get('/:id', async (req, res) => {
+    const product = await Product.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.json(product);
+  });
+
 router.post('/', async (req, res) => {
     const { name, price, quantity,type,imageURL,sound,description } = req.body;
     const product = await Product.create({

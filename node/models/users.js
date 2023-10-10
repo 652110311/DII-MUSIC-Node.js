@@ -11,9 +11,6 @@ const User = sequelize.define(
         },
         password:{
             type: DataTypes.STRING
-        },
-        cart:{
-            type: DataTypes.STRING
         }
         
     }

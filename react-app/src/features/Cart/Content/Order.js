@@ -5,7 +5,7 @@ import Tracking from "./Tracking";
 import AddminBtn from "./addmin/AddminBtn";
 import styled from "styled-components";
 
-function Order({user,userId,addminId,orderId,order,status,editCart,deleteCart,products,confirmOrder,addTrack,total,className}) {
+function Order({user,userId,addminId,status,order,setCart,editCart,confirmOrder,addTrack,className}) {
 
   return (
     <>
@@ -13,11 +13,11 @@ function Order({user,userId,addminId,orderId,order,status,editCart,deleteCart,pr
     <div className={className}>
 
       <ul className="order-list">
-        {order.order.map((item) => (
-          <Item key={item.productId} userId={userId} addminId={addminId} orderId={orderId} item={item} status={status} editCart={editCart} deleteCart={deleteCart} products={products} total={total} />
+        {order.map((item) => (
+          <Item key={item.id} userId={userId} addminId={addminId} item={item} setCart={setCart} status={status} editCart={editCart}  />
         ))}
      
-        {
+        {/* {
           userId==addminId?(
             <>
               <SumTotal total={order.totalPrice}/>
@@ -29,7 +29,7 @@ function Order({user,userId,addminId,orderId,order,status,editCart,deleteCart,pr
           ):status==="TO RECEIVE"?(
             <Tracking orderId={orderId} transport={order.transport} track={order.track}  />
           ) : null
-        }
+        } */}
       </ul>
 
       </div>

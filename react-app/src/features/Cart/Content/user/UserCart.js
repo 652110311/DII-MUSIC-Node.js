@@ -12,11 +12,21 @@ function UserCart({
   status,
   user,
   addmin,
-  products,
   url,
   setUser,
   className
 }) {
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    async function getCart() {
+      const cart = await axios.get(`http://localhost:5000/cart`);
+      setCart(cart.data)
+      console.log(cart.data)
+    }
+    getCart();
+  }, []);
 
 
   async function confirmOrder(userIdd, orderId) {
@@ -38,64 +48,6 @@ function UserCart({
       console.error("Error delete cart:", error);
     }
   }
-
-
-
-  async function editCart( productId, newQuantity, newTotal) {
-    try {
-      let newCart;
-      console.log(newTotal);
-      const cartToPay = user.cart.find((item) => item.productStatus === "TO PAY");
-  
-      if (cartToPay) {
-        const orderInCart = cartToPay.order.find((orderItem) => orderItem.productId === productId);
-
-        if (orderInCart) {
-          newCart = {
-            ...cartToPay,
-            order: cartToPay.order.map((orderItem) =>
-              orderItem.productId === productId
-                ? { ...orderItem, quantity: newQuantity }
-                : orderItem
-            ),
-            totalPrice: newTotal
-          };
-        } 
-      setUser({ ...user, cart: [newCart] });
-      const { _id, cart, ...itemWithOutId } = user;
-      await axios.put(`${url}/${user._id}`, { ...itemWithOutId, cart: [newCart] });
-    }
-  
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-    }
-  }
-  
-
-  async function deleteCart(orderId, productId,newTotal) {
-    try {
-      const updatedCart = user.cart.map((item) => {
-        if (item.orderId === orderId) {
-          const filteredOrder = item.order.filter(
-            (inner) => inner.productId !== productId
-          );
-          return { ...item, order: filteredOrder, totalPrice:newTotal };
-        }
-        return item;
-      });
-
-      const { _id, cart, ...itemWithOutId } = user;
-      setUser({ ...user, cart: updatedCart });
-      await axios.put(`${url}/${user._id}`, {
-        ...itemWithOutId,
-        cart: updatedCart,
-        
-      });
-    } catch (error) {
-      console.error("Error delete cart:", error);
-    }
-  }
-
 
 
   async function addTrack(userIdd, orderId, transport, track) {
@@ -135,6 +87,8 @@ function UserCart({
     }
   }
 
+  
+
 
   return (
     
@@ -144,50 +98,51 @@ function UserCart({
         <div className={className}>
           <div className="main-container">
             <div className="main-content">
-              <HeadContent userId={user._id} addminId={addmin._id} status={status} />
-              {user.cart.length > 0
-                ? user.cart.map((order) =>
-                    order.productStatus == status ? (
+              <HeadContent userId={user.id} addminId={addmin.id} status={status} />
+              {cart.length > 0 && status == "TO PAY" ? (
                       <>
-                
                       <Order
                         user={user}
-                        userId={user._id}
-                        addminId={addmin._id}
-
-                        orderId={order.orderId}
-                        order={order}
+                        userId={user.id}
+                        addminId={addmin.id}
+                        order={cart}
+                        setCart={setCart}
                         status={status}
-                        editCart={editCart}
-                        deleteCart={deleteCart}
-                        products={products}
-
                         confirmOrder={confirmOrder}
                         addTrack={addTrack}
-                        total = {order.totalPrice}
                         />
 
                         </>
                         
-                    ) : null
-                  )
-                : null}
+                    ) : (
+                    <>
+                      
+                      {/* <Order
+                        user={user}
+                        userId={user.id}
+                        addminId={addmin.id}
+
+                        status={status}
+                        editCart={editCart}
+                        deleteCart={deleteCart}
+
+                        confirmOrder={confirmOrder}
+                        addTrack={addTrack}
+                        /> */}
+
+                        </>
+                  )}
             </div>
           </div>
           </div>
 
-          {status === "TO PAY" && user._id!==addmin._id
-            ? user.cart.map((order) =>
-                order.productStatus === "TO PAY" ? (
+          {cart.length > 0 && status == "TO PAY" && user.id!==addmin.id ? (
                   <Footer
-                    key={order.orderId}
-                    orderId={order.orderId}
-                    total={order.totalPrice}
-                 
+                    key={user.id}
                   />
                 ) : null
-              )
-            : null}
+              
+            }
         </>
      
       

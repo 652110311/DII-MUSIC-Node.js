@@ -53,7 +53,7 @@ function Create({className,url}) {
         return;
       }
   
-      const newUser = { name: username, email: email, profile: '', password: password, cart: [] };
+      const newUser = { name:username, email: email, password: password};
       try {
         const response = await axios.post(url, newUser);
         Swal.fire({

@@ -6,50 +6,25 @@ import axios from "axios";
 function Product({item,user,setUser,url}) { 
 
     const productImage=require(`../../assets/${item.imageURL}`);
-    const { _id, cart, ...itemWithOutId } = user;
 
     async function addCart() {
       try {
-        let newCart;
-        const cartToPay = user.cart.find((item) => item.productStatus === "TO PAY");
-        const filteredCart = user.cart.filter(
-          (inner) => inner.productStatus !== "TO PAY"
-        );
-    
-        if (cartToPay) {
-          const orderInCart = cartToPay.order.find((orderItem) => orderItem.productId === item.id);
+        
+        const getCart = await axios.get(`http://localhost:5000/cart`);
+        const cart = getCart.data
+
+        const orderInCart = cart.find((order) => order.productId === item.id);
+
+        if (orderInCart) {
           
-          if (orderInCart) {
-            // หากมีสินค้าที่มี productId เดียวกับ item.id ในตะกร้าให้เพิ่มปริมาณ
-            newCart = [...filteredCart,{
-              ...cartToPay,
-              order: cartToPay.order.map((orderItem) =>
-                orderItem.productId === item.id
-                  ? { ...orderItem, quantity: orderItem.quantity + 1 }
-                  : orderItem
-              ),
-              totalPrice: cartToPay.totalPrice+item.price
-            }];
-          } else {
-            // หากไม่มีสินค้าในตะกร้าที่มี productId เดียวกับ item.id ให้เพิ่มสินค้าใหม่
-            newCart = [...filteredCart,{
-              ...cartToPay,
-              order: [...cartToPay.order, { productId: item.id, quantity: 1 }],
-              totalPrice: cartToPay.totalPrice+item.price
-            }];
-          }
         } else {
           // ถ้าไม่มีสินค้าใน cartToPay ให้สร้างตะกร้าใหม่
-          newCart = [...cart,{
-            orderId: user.cart.length + 1,
-            order: [{ productId: item.id, quantity: 1 }],
-            productStatus: "TO PAY",
-            totalPrice: item.price
-          }];
+          const newOrder = { productId:item.id, quantity:1, price: item.price};
+          await axios.post(`http://localhost:5000/cart`, newOrder);
+          
         }
-        
-        setUser({ ...user, cart: newCart });
-        await axios.put(`${url}/${user._id}`, { ...itemWithOutId, cart: newCart });
+        const getUpdateCart = await axios.get(`http://localhost:5000/cart`);
+        setUser(getUpdateCart);
     
       } catch (error) {
         console.error("Error adding to cart:", error);

@@ -78,8 +78,7 @@ function App() {
             path="/create-account"
             element={
               <>
-                {" "}
-                <Create url={url} />{" "}
+                <Create url={url} />
               </>
             }
           />

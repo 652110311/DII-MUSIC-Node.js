@@ -1,8 +1,24 @@
-import React from "react";
+import React, { Fragment, useState, useEffect, useReducer } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-function Footer({ orderId,total, className }) {
+
+function Footer({ className }) {
+
+  const [total,setTotal] = useState(0);
+
+  useEffect(() => {
+      async function getProduct() {
+        const price = await axios.get(`http://localhost:5000/cart`);
+        let sum = 0
+        {price.data.map((item) => (
+          sum = item.price+sum
+        ))}
+        setTotal(sum) 
+      }
+      getProduct();  
+  }, []);
 
 
   return (

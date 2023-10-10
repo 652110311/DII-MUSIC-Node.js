@@ -40,7 +40,6 @@ const userData = [
         productStatus: "TO RECEIVE",
         totalPrice: 600,
       },
-
       {
         userID: 1,
         orderId: 4,
