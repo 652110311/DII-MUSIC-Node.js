@@ -1,8 +1,9 @@
-import React from "react";
+
 import styled from "styled-components";
+import React, { Fragment, useState, useEffect, useReducer } from "react";
+import axios from "axios";
 
-
-function SumTotal({total,className }) {
+function SumTotal({total,className}) {
 
   return (
     <>
@@ -12,8 +13,7 @@ function SumTotal({total,className }) {
                 TOTAL&nbsp;&nbsp;&nbsp;&nbsp;${total}
             </div>
         </div>
-    </div>
-     
+    </div>  
     </>
   );
 }

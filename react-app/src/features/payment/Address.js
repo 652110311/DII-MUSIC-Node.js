@@ -7,14 +7,7 @@ import Swal from "sweetalert2";
 import Topbar from "../home/Topbar";
 
 function Address({
-  className,
-  user,
-  setUser,
-  url,
-  urlAddmin,
-  addmin,
-  products,
-}) {
+  className,user,setUser,order,setOrder}) {
 
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
@@ -28,16 +21,41 @@ function Address({
   const navigate = useNavigate();
   let total = 0;
 
-    const handleFileChange = (event) => {
-      const selectedFile = event.target.files[0]; // สำหรับไฟล์เดียว
-      if (selectedFile) {
-        // ใช้ URL.createObjectURL() เพื่อสร้าง URL ที่ชี้ไปยังไฟล์รูปภาพ
-        const path = URL.createObjectURL(selectedFile);
-        // ตอนนี้คุณมี path (URL) ที่ชี้ไปยังไฟล์รูปภาพใน path
-        setadd(path);
-      }
+  async function newOrder(idAddress){
+    const getOrder = await axios.get(`http://localhost:5000/orders/${user.id}/${user.orderId}`);
+    const {id,addressId,statusUser,statusAddmin,...other} = getOrder.data.order;
+    await axios.put(`http://localhost:5000/orders/${id}`,{...other,addressId:idAddress,statusUser:"TO SHIP",statusAddmin:"TO PAY"});    
+  }
+
+  async function newUser(){
+    const getUser = await axios.get(`http://localhost:5000/users/${user.id}`);
+    const {id,orderId,...other} = getUser.data;
+    await axios.put(`http://localhost:5000/users/${id}`,{...other,orderId:orderId+1});    
+
+    await axios.post(`http://localhost:5000/orders`,{orderId:orderId+1,userId:user.id,total:0,statusUser:"TO PAY"})
+     
+  }
+
+
+  function handleFileChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imagePath = e.target.result;
+        console.log('Image path: ', imagePath);
+        const shortenedPath = encodeURIComponent(imagePath); // ทำเป็นรหัสที่สั้น
+        setadd(shortenedPath);  // เก็บ URL ของภาพใน state
+      };
+      reader.readAsDataURL(file);
     }
-    
+  }
+  
+
+
+ 
+  
+  
 
   async function addAddress(event) {
     event.preventDefault();
@@ -53,66 +71,41 @@ function Address({
       img: add,
     };
 
-    if (!firstname || !lastname || !mobile || !city || !add) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Please fill in all fields",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
+    // if (!firstname || !lastname || !mobile || !city || !add) {
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "error",
+    //     title: "Please fill in all fields",
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   });
+    //   return;
+    // }
 
-    if (!email.includes("@")) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Invalid email format",
-        text: 'Email must contain "@"',
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      return;
-    }
+    // if (!email.includes("@")) {
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "error",
+    //     title: "Invalid email format",
+    //     text: 'Email must contain "@"',
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   });
+    //   return;
+    // }
 
     try {
-      const updatedCartUser = user.cart.map((item) => {
-        if (item.productStatus === "TO PAY") {
-          return { ...item, productStatus: "TO SHIP" };
-        }
-        return item;
-      });
+      const respone = await axios.post(`http://localhost:5000/address`,newAddress)
+      newOrder(respone.data.id);
+      newUser();
 
-      const itemToPushForAddmin = user.cart.find(
-        (item) => item.productStatus === "TO PAY"
-      );
+      const getUser = await axios.get(`http://localhost:5000/users/${user.id}`);
+      setUser(getUser.data);
 
-      if (!Array.isArray(addmin.cart)) {
-        addmin.cart = []; // เริ่มต้นเป็นอาร์เรย์ว่าง
-      }
+      const getOrder = await axios.get(`http://localhost:5000/orders`);
+      setOrder(getOrder.data)
 
-      if (itemToPushForAddmin) {
-        const updatedItemToPushForAddmin = {
-          userId: user._id,
-          ...itemToPushForAddmin,
-          address: newAddress,
-        };
-
-        const { _id, cart, ...itemWithOutIdA } = addmin;
-        await axios.put(urlAddmin, {
-          ...itemWithOutIdA,
-          cart: [...addmin.cart, updatedItemToPushForAddmin],
-        });
-      }
-
-      const { _id, cart, ...itemWithOutId } = user;
-
-      setUser({ ...user, cart: updatedCartUser });
-      await axios.put(`${url}/${user._id}`, {
-        ...itemWithOutId,
-        cart: updatedCartUser,
-      });
+        
 
       Swal.fire({
         position: 'center',
@@ -122,39 +115,14 @@ function Address({
         timer: 1500
 
       }).then(() => {
-        navigate('/');
+        navigate('/toPay');
       });
     } catch (error) {
       console.error("Error checkOut cart:", error);
     }
   }
 
-  function renderOrderItems(cart) {
-    return cart.order.map((order) => {
-      const product = products.find(
-        (product) => product.id === order.productId
-      );
-      return (
-        <div key={order.productId}>
-          <div className="d-flex justify-content-between">
-            <p>{product.name}</p>
-            <p>{order.quantity}</p>
-            <p>${product.price * order.quantity}</p>
-          </div>
-        </div>
-      );
-    });
-  }
-
-  function renderCartItems() {
-    return user.cart.map((orders) => {
-      if (orders.productStatus === "TO PAY") {
-        total = orders.totalPrice;
-        return renderOrderItems(orders);
-      }
-      return null;
-    });
-  }
+  
 
   return (
     <>
@@ -283,6 +251,7 @@ function Address({
                         accept="image/*"
                         onChange={handleFileChange}
                       />
+
                     </div>
                     <div className="col-md-12 form-group">
                       <div className="custom-control custom-checkbox">
@@ -310,7 +279,7 @@ function Address({
                   <div className="card-body">
                     <h5 className="font-weight-medium mb-3">Products</h5>
                     
-                    {user.cart.length > 0 ? renderCartItems() : null}
+                    {/* {user.cart.length > 0 ? renderCartItems() : null} */}
 
                     <div className="card-footer border-secondary bg-transparent">
                       <div className="d-flex justify-content-between mt-2">

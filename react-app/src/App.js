@@ -12,24 +12,21 @@ import Admin from "./features/Admin";//
 //testcommit
 
 function App() {
-  const urlProduct = `http://localhost:5000/products`;
-  const url = `http://localhost:5000/users`;
-  const urlAddmin = `http://localhost:5000/users/1`;
+  const url = `http://localhost:5000/users`;;
   const [user, setUser] = useState("");
-  const [addmin, setAddmin] = useState([]);
   const [products, setProducts] = useState([]);
+  const [order ,setOrder] = useState([]);
 
   useEffect(() => {
     async function getProducts() {
-      const products = await axios.get(urlProduct);
-      const addmin = await axios.get(urlAddmin);
-      setAddmin(addmin.data);
+      const products = await axios.get(`http://localhost:5000/products`);
+      const orders = await axios.get(`http://localhost:5000/orders`);
+      setOrder(orders.data)
       setProducts(products.data);
-      console.log(products);
-      console.log('testtu')
+      
     }
     getProducts();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -42,7 +39,7 @@ function App() {
                 products={products}
                 user={user}
                 setUser={setUser}
-                url={url}
+                setOrder={setOrder}
               />
             }
           />
@@ -67,10 +64,8 @@ function App() {
               <Address
                 user={user}
                 setUser={setUser}
-                url={url}
-                urlAddmin={urlAddmin}
-                addmin={addmin}
-                products={products}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />
@@ -88,10 +83,9 @@ function App() {
               <UserCart
                 status={"TO PAY"}
                 user={user}
-                addmin={addmin}
-                products={products}
-                url={url}
                 setUser={setUser}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />
@@ -101,10 +95,9 @@ function App() {
               <UserCart
                 status={"TO SHIP"}
                 user={user}
-                addmin={addmin}
-                products={products}
-                url={url}
                 setUser={setUser}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />
@@ -114,10 +107,9 @@ function App() {
               <UserCart
                 status={"TO RECEIVE"}
                 user={user}
-                addmin={addmin}
-                products={products}
-                url={url}
                 setUser={setUser}
+                order={order}
+                setOrder={setOrder}
               />
             }
           />

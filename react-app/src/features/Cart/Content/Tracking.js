@@ -1,14 +1,19 @@
-import React from "react";
+import React, { Fragment, useState, useEffect, useReducer } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-function Tracking({transport,track,className}) {
+function Tracking({order,className}) {
+
+   console.log(`tracking : ${order}`)
+    const [transport,setTransport] = useState(order.transport);
+    const [tracking,setTracking] = useState(order.tracking);
 
   return (
     <>
     <div className={className}>
         <div className='btn-container'>
             <div className="btn-content">
-                    TRANSPORT : {transport} &nbsp;&nbsp;&nbsp;&nbsp; TRACK : {track}
+                    TRANSPORT : {transport} &nbsp;&nbsp;&nbsp;&nbsp; TRACK : {tracking}
             </div>
         </div>
     </div>

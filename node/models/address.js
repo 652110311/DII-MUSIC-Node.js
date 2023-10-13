@@ -29,8 +29,9 @@ const Address = sequelize.define(
             type: DataTypes.STRING
         },
         img: {
-            type: DataTypes.STRING
-        },
+            type: DataTypes.STRING(10000)
+        }
+
     });
 
 module.exports = Address;

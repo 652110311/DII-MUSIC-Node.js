@@ -3,14 +3,17 @@ const { sequelize } = require('../config/database');
 
 const Cart = sequelize.define(
     'Cart',{
+        userId:{
+            type: DataTypes.DOUBLE
+        },
         productId:{
-            type: DataTypes.STRING
+            type: DataTypes.DOUBLE
         },
         quantity:{
             type: DataTypes.DOUBLE     
         },
-        price:{
-            type: DataTypes.DOUBLE      
+        orderId:{
+            type: DataTypes.DOUBLE     
         }
     });
 

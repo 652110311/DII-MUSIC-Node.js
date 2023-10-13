@@ -4,23 +4,16 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-function Footer({ className }) {
+function Footer({ user,total,className }) {
 
-  const [total,setTotal] = useState(0);
-
-  useEffect(() => {
-      async function getProduct() {
-        const price = await axios.get(`http://localhost:5000/cart`);
-        let sum = 0
-        {price.data.map((item) => (
-          sum = item.price+sum
-        ))}
-        setTotal(sum) 
-      }
-      getProduct();  
-  }, []);
-
-
+  // useEffect(() => {
+  //   async function getProduct() {
+  //     const getOrder = await axios.get(`http://localhost:5000/orders/${user.id}/${user.orderId}`);
+  //     setTotal(getOrder.data.order.total)
+  //   }
+  //   getProduct();
+  // }, []);
+  
   return (
     <>
       <div className={className}>

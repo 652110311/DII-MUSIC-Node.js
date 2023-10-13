@@ -1,47 +1,70 @@
-import React, { useState } from "react";
+import React, { Fragment, useState, useEffect, useReducer } from "react";
 import Item from "./Item";
 import SumTotal from "../SumTotal";
 import Tracking from "./Tracking";
 import AddminBtn from "./addmin/AddminBtn";
 import styled from "styled-components";
+import axios from "axios";
 
-function Order({user,userId,addminId,status,order,setCart,editCart,confirmOrder,addTrack,className}) {
+function Order({ user, order, status, total, setTotal,setOrder, className }) {
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    async function getCart() {
+      const getCart = await axios.get(`http://localhost:5000/carts`);
+      setCart(getCart.data);
+      setTotal(order.total)
+    }
+    getCart();
+  }, []);
 
   return (
     <>
+      <div className={className}>
+        <ul className="order-list">
+          {cart.length > 0
+            ? cart.map((item) => {
+                if (
+                  item.orderId === order.orderId &&
+                  item.userId === order.userId 
+                 
+                ) {
+                  return (
+                    <Item
+                      key={item.id}
+                      user={user}
+                      item={item}
+                      status={status}
+                      setCart={setCart}
+                      total={total}
+                      setTotal={setTotal}
+                    />
+                  );
+                }
+                
 
-    <div className={className}>
+                return null; // Return null for items that don't meet the conditions
+              })
+            : null}
 
-      <ul className="order-list">
-        {order.map((item) => (
-          <Item key={item.id} userId={userId} addminId={addminId} item={item} setCart={setCart} status={status} editCart={editCart}  />
-        ))}
-     
-        {/* {
-          userId==addminId?(
+          {user.id == 1 ? (
             <>
-              <SumTotal total={order.totalPrice}/>
-              <AddminBtn user={user} userIdd={order.userId} orderId={order.orderId} status={status} transport={order.transport} track={order.track} confirmOrder={confirmOrder} addTrack={addTrack}/>
+              <SumTotal total={order.total} />
+              <AddminBtn order={order} status={status} setOrder={setOrder} />
             </>
-          ):status!=="TO PAY" && userId!==addminId?(
-            <SumTotal total={order.totalPrice}/>
-
-          ):status==="TO RECEIVE"?(
-            <Tracking orderId={orderId} transport={order.transport} track={order.track}  />
-          ) : null
-        } */}
-      </ul>
-
+          ) : status !== "TO PAY" && user.id !== 1 ? (
+            <SumTotal total={order.total} />
+          ) : status === "TO RECEIVE" ? (
+            <Tracking order={order} />
+          ) : null}
+        </ul>
       </div>
-
-
     </>
   );
 }
 
 export default styled(Order)`
-
-  .order-list{
+  .order-list {
     display: flex;
     justify-content: center;
     justify-items: center;
@@ -52,9 +75,8 @@ export default styled(Order)`
     margin-top: 14px;
     padding-top: 14px;
   }
-  ul{
+  ul {
     margin: 0;
     padding: 0;
   }
-
-`
+`;

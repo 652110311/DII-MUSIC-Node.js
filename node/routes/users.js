@@ -17,13 +17,32 @@ router.get('/:id', async (req, res) => {
   });
 
   router.post('/', async (req, res) => {
-    const {name,email,password } = req.body;
+    const {name,email,password,orderId } = req.body;
     console.log(req.body);
     const user = await User.create({
       name,
       email,
-      password
+      password,
+      orderId
     });
+    res.json(user);
+  });
+
+  router.put('/:id', async (req, res) => {
+    const { name,email,password,orderId } = req.body;
+    const user = await User.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    user.name = name;
+    user.email = email;
+    user.password = password;
+    user.orderId = orderId;
+
+    await user.save();
+  
     res.json(user);
   });
   

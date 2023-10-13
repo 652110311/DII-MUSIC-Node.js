@@ -15,6 +15,15 @@ router.post('/', async (req, res) => {
     });
     res.json(newAddress);
 });
+
+router.get('/:id', async (req, res) => {
+    const address = await Address.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.json(address);
+  });
   
 module.exports = router;
 

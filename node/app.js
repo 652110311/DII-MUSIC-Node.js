@@ -3,8 +3,9 @@ const app = express();
 const cors = require('cors');
 const productRoutes = require('./routes/products');
 const userRoutes = require('./routes/users')
-const cartRoutes = require('./routes/cart')
+const cartRoutes = require('./routes/carts')
 const addressRoutes = require('./routes/address')
+const orderRoutes = require('./routes/orders')
 const { connect , sync } = require('./config/database')
 
 // Setting up middleware
@@ -33,8 +34,9 @@ app.use(cors(corsOptions));
 // Setting up routes
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
-app.use('/cart', cartRoutes);
+app.use('/carts', cartRoutes);
 app.use('/address', addressRoutes);
+app.use('/orders', orderRoutes);
 
 // Creating a server
 app.listen(5000, () => {

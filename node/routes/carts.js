@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/cart')
+const Cart = require('../models/carts')
 
 router.get('/', async (req, res) => {
     const cart = await Cart.findAll();
@@ -8,10 +8,10 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const {productId,quantity,price } = req.body;
+    const {userId,productId,quantity,orderId } = req.body;
     console.log(req.body);
     const cart = await Cart.create({
-        productId,quantity,price
+        userId,productId,quantity,orderId
     });
     res.json(cart);
 });
@@ -25,17 +25,20 @@ router.get('/:id', async (req, res) => {
   res.json(cart);
 });
 
+
+
 router.put('/:id', async (req, res) => {
-    const { productId,quantity,price } = req.body;
+    const { userId,productId,quantity,orderId } = req.body;
     const cart = await Cart.findOne({
       where: {
         id: req.params.id
       }
     });
 
+    cart.userId = userId;
     cart.productId = productId;
     cart.quantity = quantity;
-    cart.price = price;
+    cart.orderId = orderId;
 
     await cart.save();
   

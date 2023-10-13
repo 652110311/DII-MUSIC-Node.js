@@ -2,22 +2,57 @@ import React, { Fragment, useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Tracking from "../Tracking";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-function AddminBtn({user,userIdd,orderId,status,transport,track,confirmOrder,addTrack,className}) {
+function AddminBtn({order,status,setOrder,className}) {
 
   const [addTracking,setAddTracking] = useState('');
   const [addTransport,setAddTransport] = useState('J&T');
+  const [addressData,setAddressData] = useState([]);
 
-  const addressData = user.cart.find(orders => orders.userId === userIdd && orders.orderId === orderId);
-  
 
-  function toConfirmOrder(){
-    confirmOrder(userIdd,orderId)
+  useEffect(() => {
+    async function getAddress() {
+      const getAddressData = await axios.get(`http://localhost:5000/address/${order.addressId}`);
+      setAddressData(getAddressData.data)
+    }
+    getAddress();
+  }, []);
+
+  async function toConfirmOrder() {
+
+    try {
+      const getOrder = await axios.get(`http://localhost:5000/orders/${order.userId}/${order.orderId}`);
+      const orderData = getOrder.data.order;  // Renamed to avoid naming conflict
+      let { id, statusAddmin, ...withOutId } = orderData;
+      await axios.put(`http://localhost:5000/orders/${id}`, { ...withOutId, statusAddmin: "TO SHIP" });
+      
+      const upDate = await axios.get(`http://localhost:5000/orders`)
+      setOrder(upDate.data)
+    } catch (error) {
+      console.error('Error confirming order:', error);
+    }
+    
+   
   }
+ 
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-    addTrack(userIdd,orderId,addTransport,addTracking)
+    try {
+      const getOrder = await axios.get(`http://localhost:5000/orders/${order.userId}/${order.orderId}`);
+      const orderData = getOrder.data.order;  // Renamed to avoid naming conflict
+      let { id, transport,tracking,statusUser,statusAddmin, ...withOutId } = orderData;
+      await axios.put(`http://localhost:5000/orders/${id}`, { ...withOutId,transport:addTransport,tracking:addTracking,statusUser:"TO RECEIVE",statusAddmin:"TO RECEIVE" });
+
+      const upDate = await axios.get(`http://localhost:5000/orders`)
+      setOrder(upDate.data)
+
+    } catch (error) {
+      console.error('Error confirming order:', error);
+    }
+    
+    
   }
 
   return (
@@ -31,19 +66,19 @@ function AddminBtn({user,userIdd,orderId,status,transport,track,confirmOrder,add
               </div>
 
               <div className="address">
-                <p>FRISTNAME : {addressData.address.firstname}</p>
-                <p>LASTNAME : {addressData.address.lastname}</p>
-                <p>EMAIL : {addressData.address.email}</p>
-                <p>MOBILE : {addressData.address.mobile}</p>
+                <p>FRISTNAME : {addressData.firstname}</p>
+                <p>LASTNAME : {addressData.lastname}</p>
+                <p>EMAIL : {addressData.email}</p>
+                <p>MOBILE : {addressData.mobile}</p>
               </div>
               <div className="address-1">
-               <p>ADDRESS : {addressData.address.address}</p>
-                <p>CITY : {addressData.address.city}</p>
-                <p>STATE : {addressData.address.state}</p>
-                <p>ZIP : {addressData.address.zip}</p>
+               <p>ADDRESS : {addressData.address}</p>
+                <p>CITY : {addressData.city}</p>
+                <p>STATE : {addressData.state}</p>
+                <p>ZIP : {addressData.zip}</p>
                 </div>
               <div className="showimg">
-              <img src={addressData.address.img}></img>
+              <img src={addressData.img}></img>
               </div>
             </>
           ) : status === "TO SHIP" ? (
@@ -68,7 +103,7 @@ function AddminBtn({user,userIdd,orderId,status,transport,track,confirmOrder,add
           
           ) : status === "TO RECEIVE" ? (
 
-              <Tracking transport={transport} track={track}/>
+              <Tracking order={order} />
 
           ) : null}
         </div>

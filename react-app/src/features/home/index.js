@@ -11,7 +11,7 @@ import styled from "styled-components";
 import './GlobalStyle.css' ;// import './index.css';;
 import PropTypes from "prop-types";
 
-function Home({products,user,setUser,url,className}) {
+function Home({products,user,setUser,setOrder,className}) {
 
   return (
     <>
@@ -27,7 +27,7 @@ function Home({products,user,setUser,url,className}) {
     </div>
       
       <ul class="d-flex justify-content-center flex-wrap mr-2">
-        {products.map((product)=>(<Product key={product.id} item={product} user={user} setUser={setUser} url={url} />))}
+        {products.map((product)=>(<Product key={product.id} item={product} user={user} setUser={setUser} setOrder={setOrder}/>))}
         
       </ul>
      </div>

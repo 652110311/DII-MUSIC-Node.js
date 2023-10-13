@@ -3,28 +3,39 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-function Product({item,user,setUser,url}) { 
+function Product({item,user,setUser,setOrder}) { 
 
     const productImage=require(`../../assets/${item.imageURL}`);
 
     async function addCart() {
       try {
         
-        const getCart = await axios.get(`http://localhost:5000/cart`);
+        const getCart = await axios.get(`http://localhost:5000/carts`);
         const cart = getCart.data
 
-        const orderInCart = cart.find((order) => order.productId === item.id);
+        const orderInCart = cart.find((order) => order.productId == item.id && order.userId == user.id);
 
         if (orderInCart) {
+
+          let {id,quantity,...withOutId} = orderInCart
+          await axios.put(`http://localhost:5000/carts/${id}`,{...withOutId,quantity:quantity+1})
+          
           
         } else {
           // ถ้าไม่มีสินค้าใน cartToPay ให้สร้างตะกร้าใหม่
-          const newOrder = { productId:item.id, quantity:1, price: item.price};
-          await axios.post(`http://localhost:5000/cart`, newOrder);
-          
+          const newOrder = { userId:user.id,productId:item.id, quantity:1,orderId:user.orderId};
+          await axios.post(`http://localhost:5000/carts`, newOrder);
+                    
         }
-        const getUpdateCart = await axios.get(`http://localhost:5000/cart`);
-        setUser(getUpdateCart);
+
+        const getOrder = await axios.get(`http://localhost:5000/orders/${user.id}/${user.orderId}`);
+        const order = getOrder.data.order
+        let {id,total,...withOutId} = order
+        await axios.put(`http://localhost:5000/orders/${id}`, {...withOutId,total:total+item.price});
+
+        const upDate = await axios.get(`http://localhost:5000/orders`)
+        setOrder(upDate.data)
+        
     
       } catch (error) {
         console.error("Error adding to cart:", error);

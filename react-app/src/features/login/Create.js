@@ -53,9 +53,10 @@ function Create({className,url}) {
         return;
       }
   
-      const newUser = { name:username, email: email, password: password};
+      const newUser = { name:username, email: email, password: password,orderId:1};
       try {
         const response = await axios.post(url, newUser);
+        await axios.post(`http://localhost:5000/orders`,{orderId:1,userId:response.data.id,total:0,statusUser:"TO PAY"})
         Swal.fire({
           position: 'center',
           icon: 'success',
