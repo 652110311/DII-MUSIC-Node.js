@@ -3,18 +3,21 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import styled from "styled-components";
 import { updateProduct } from "./actions";
 function UpdateForm() {
   const { id } = useParams();
   const products = useSelector((state) => state.products);
   const product = products.find((product) => product.id === Number(id));
+  const productImage = require(`../../../assets/${product.imageURL}`);
 
   const [name, setName] = useState(product.name);
-  const [imageURL, setImageURL] = useState(`${product.imageURL}`);
+  const [imageURL, setImageURL] = useState(product.imageURL);
+  const [price, setPrice] = useState(product.price);
+  const [quantity, setQuantity] = useState(product.quantity);
   const [type, setType] = useState(product.type);
-  const [sound, setSound] = useState(`${product.sound}`);
-  const [description, setDescription] = useState(product.description.product);
+  const [sound, setSound] = useState(product.sound);
+  const [description, setDescription] = useState(product.description);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,13 +27,34 @@ function UpdateForm() {
       updateProduct({
         id: product.id,
         name,
+        price,
+        quantity,
         type,
         imageURL,
         sound,
         description,
       })
     );
-    navigate("/Admin/a");
+    // ทำการส่งข้อมูลไปยัง API สำหรับการอัปเดตสินค้า
+    axios
+      .put(`http://localhost:5000/products/${product.id}`, {
+        id: product.id,
+        name,
+        price,
+        quantity,
+        type,
+        imageURL,
+        sound,
+        description,
+      })
+      .then((response) => {
+        // ทำอย่างไรก็ตามหลังจาก API ดำเนินการอัปเดตและส่งข้อมูลกลับ
+        console.log("Product updated:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error updating product:", error);
+      });
+    navigate("/Admin");
   };
 
   function handleImageChange(event) {
@@ -64,9 +88,17 @@ function UpdateForm() {
             <div className="file-box">
               <span className="plus-icon">
                 {" "}
-                <img class="product-img" src={imageURL} alt={name} />{" "}
+                <img
+                  class="product-img"
+                  style={{ "z-index": "0" }}
+                  src={imageURL}
+                  alt={name}
+                />{" "}
                 {/* Display the existing image */}
-                <i class="fas fa-edit  mr-1"></i>
+                <i
+                  class="edit-icon fas fa-edit  mr-1 "
+                  style={{ "z-index": "1" }}
+                ></i>
               </span>
             </div>
           </label>
@@ -85,6 +117,22 @@ function UpdateForm() {
             id="type"
             value={type}
             onChange={(event) => setType(event.target.value)}
+          />
+          <label htmlFor="price">Price:</label>
+          <input
+            name="price"
+            type="text"
+            id="price"
+            value={price}
+            onChange={(event) => setPrice(event.target.value)}
+          />
+          <label htmlFor="quantity">Quantity:</label>
+          <input
+            name="quantity"
+            type="text"
+            id="quantity"
+            value={quantity}
+            onChange={(event) => setQuantity(event.target.value)}
           />
           <label htmlFor="product-sound">Product Sound (MP3):</label>
           <input

@@ -19,18 +19,6 @@ const Dropdown = ({ options, onSelect, className }) => {
     onSelect(option);
   };
 
-  const [isOpenConfirm, setIsOpenConfirm] = useState(false);
-  const [selectedOptionConfirm, setSelectedOptionConfirm] = useState(null);
-
-  const toggleDropdownConfirm = () => {
-    setIsOpenConfirm(!isOpenConfirm);
-  };
-
-  const handleOptionClickConfirm = (option) => {
-    setSelectedOptionConfirm(option);
-    setIsOpenConfirm(false);
-    onSelect(option);
-  };
   // ---------------------------------------
   // Render products based on the selected category or all products if no category is selected
   return (
@@ -39,7 +27,6 @@ const Dropdown = ({ options, onSelect, className }) => {
         <div className="dropdown">
           <button className="btn dropdown-toggle" onClick={toggleDropdown}>
             {selectedOption ? selectedOption.label : "Categories"}
-            <i class="fa fa-angle-down text-dark"></i>
           </button>
           {isOpen && (
             <div className="dropdown-menu">
@@ -63,43 +50,12 @@ const Dropdown = ({ options, onSelect, className }) => {
               <Link to="/Admin" class="nav-item nav-link active">
                 Home
               </Link>
-              <Link to="/sales" class="nav-item nav-link">
-                sales
+              <Link to="/ToPay" class="nav-link-confirm" key={"Payment"}>
+                {"Payment"}
               </Link>
-              <Link to="/productDetail" class="nav-item nav-link">
-                Product Detail
+              <Link to="/ToShip" class="nav-link-confirm" key={"Shipping"}>
+                {"Shipping"}
               </Link>
-              <div className="confirm">
-                <button
-                  className="btn dropdown-confirm"
-                  onClick={toggleDropdownConfirm}
-                >
-                  {selectedOptionConfirm
-                    ? selectedOptionConfirm.label
-                    : "Confirm Orders"}
-                  <i class="fa fa-angle-down text-dark"></i>
-                </button>
-                {isOpenConfirm && (
-                  <div className="dropdown-menu-confirm">
-                    <Link
-                      to="/ToPay"
-                      class="nav-link-confirm"
-                      key={"Payment"}
-                      onClick={() => handleOptionClickConfirm("Payment")}
-                    >
-                      {"Payment"}
-                    </Link>
-                    <Link
-                      to="/ToShip"
-                      class="nav-link-confirm"
-                      key={"Shipping"}
-                      onClick={() => handleOptionClickConfirm("Shipping")}
-                    >
-                      {"Shipping"}
-                    </Link>
-                  </div>
-                )}
-              </div>
             </div>
           </nav>
 

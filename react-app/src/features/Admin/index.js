@@ -14,7 +14,7 @@ import GlobalStyle from "./GlobalStyle";
 
 function Admin() {
   const options = [
-    { value: "all", label: "All" },
+    { value: "categories", label: "" },
     { value: "guitar", label: "Guitar" },
     { value: "bass", label: "Bass" },
     { value: "piano", label: "Piano" },
@@ -25,7 +25,7 @@ function Admin() {
   const [selectedOption, setSelectedOption] = useState(null); // State to store the selected option
 
   const handleOptionSelect = (option) => {
-    if (option.value === "all") {
+    if (option.value === "categories") {
       setSelectedOption(null); // Set selectedOption to null for the "Home" link
     } else if (option) {
       setSelectedOption(option);
@@ -41,9 +41,7 @@ function Admin() {
     async function getProducts() {
       console.log("get");
       try {
-        const products = await axios.get(
-          "https://run.mocky.io/v3/85ee91f9-fae6-4dab-8f9a-debb80ffae3f?fbclid=IwAR0oSUlJf3JFevUVNQ4WARh7nWLAq3gAkQ28RhUR_8cW6WwA4J4rB883Xbc"
-        );
+        const products = await axios.get(`http://localhost:5000/products`);
         dispatch(fetchProducts(products.data));
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -54,7 +52,6 @@ function Admin() {
 
   return (
     <>
-  
       <GlobalStyle />
       <Navbar />
       <Dropdown options={options} onSelect={handleOptionSelect} />
@@ -62,18 +59,13 @@ function Admin() {
         <Summary />
         {products.length > 0 ? (
           <Routes>
+            <Route path="/" element={<Home products={products} />} />
             <Route
               path="/add-product"
               element={<AddForm addProduct={products} />}
             />
             <Route path="/update-product/:id" element={<UpdateForm />} />
-           
-            <Route
-              path="/All"
-              element={
-                <Home products={products} selectedOption={selectedOption} />
-              }
-            />
+
             <Route
               path="/Guitar"
               element={
@@ -109,7 +101,6 @@ function Admin() {
           <div>Loading products....</div>
         )}
       </Container>
-    
     </>
   );
 }

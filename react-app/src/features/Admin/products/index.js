@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import axios from "axios";
 import { updateProduct, deleteProduct } from "./actions";
 import styled from "styled-components";
 function Product({ item, className }) {
@@ -21,7 +21,16 @@ function Product({ item, className }) {
   const navigate = useNavigate();
   const onDelete = () => {
     dispatch(deleteProduct({ id: product.id }));
-    navigate("/Admin/All");
+    axios
+      .delete(`http://localhost:5000/products/${product.id}`)
+      .then((response) => {
+        // ทำอย่างไรก็ตามหลังจาก API ดำเนินการลบและส่งข้อมูลกลับ
+        console.log("Product deleted:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+      });
+    navigate("/Admin");
   };
 
   return (
@@ -33,16 +42,19 @@ function Product({ item, className }) {
           </div>
           <div class="card-body">
             <h6 class="text-truncate">{item.name}</h6>
+            <div className="qty">Quantity : {item.quantity}</div>
             <div class="price-zone">
               <h6 className="price">{item.price}</h6>
-              <h6 class="text-muted ">
+              <h7 class="text-muted ">
                 <del>$123.00</del>
-              </h6>
+              </h7>
             </div>
           </div>
           <div class="card-footer">
-            <Link to={`/Admin/update-product/${item.id}`} className="btn edit-button">
-             
+            <Link
+              to={`/Admin/update-product/${item.id}`}
+              className="btn edit-button"
+            >
               <i class="fas fa-edit text-primary mr-1"></i>
               Edit
             </Link>

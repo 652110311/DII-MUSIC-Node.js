@@ -15,7 +15,7 @@ const Products = sequelize.define("Product", {
     type: DataTypes.STRING,
   },
   imageURL: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
   sound: {
     type: DataTypes.STRING,

@@ -9,6 +9,8 @@ import { addProduct } from "./actions";
 function AddForm() {
   const [name, setName] = useState("");
   const [imageURL, setImageURL] = useState(null);
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [type, setType] = useState("");
   const [sound, setSound] = useState("");
   const [description, setDescription] = useState("");
@@ -17,9 +19,30 @@ function AddForm() {
 
   function onSubmit(event) {
     event.preventDefault();
-    dispatch(addProduct({ name, type, imageURL, sound, description }));
-    navigate("/Admin/All");
-    console.log("added");
+    dispatch(
+      addProduct({ name, price, quantity, type, imageURL, sound, description })
+    );
+    const productData = {
+      name,
+      price,
+      quantity,
+      type,
+      imageURL,
+      sound,
+      description,
+    };
+
+    axios
+      .post("http://localhost:5000/products", productData)
+      .then((response) => {
+        // ทำอย่างไรก็ตามหลังจาก API จัดการข้อมูลและส่งข้อมูลกลับ
+        console.log("Product added:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error adding product:", error);
+      });
+
+    navigate("/Admin");
   }
 
   function handleImageChange(event) {
@@ -35,6 +58,7 @@ function AddForm() {
     // Do something with the selected file, e.g., store it in state
     setSound(selectedFile);
   };
+
   return (
     <div>
       <h1>Add New Product</h1>
@@ -71,7 +95,22 @@ function AddForm() {
           value={type}
           onChange={(event) => setType(event.target.value)}
         />
-
+        <label htmlFor="price">Price:</label>
+        <input
+          name="price"
+          type="text"
+          id="price"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)}
+        />
+        <label htmlFor="quantity">Quantity:</label>
+        <input
+          name="quantity"
+          type="text"
+          id="quantity"
+          value={quantity}
+          onChange={(event) => setQuantity(event.target.value)}
+        />
         <label htmlFor="product-sound">Product Sound (MP3):</label>
         <input
           type="file"
