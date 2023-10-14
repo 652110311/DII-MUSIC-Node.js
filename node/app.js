@@ -6,6 +6,7 @@ const userRoutes = require("./routes/users");
 const cartRoutes = require("./routes/carts");
 const addressRoutes = require("./routes/address");
 const orderRoutes = require("./routes/orders");
+const summaryRoutes = require("./routes/summary");
 const { connect, sync } = require("./config/database");
 
 // Setting up middleware
@@ -35,7 +36,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Setting up routes
-app.use("/summary", productRoutes);
+app.use("/summary", summaryRoutes);
 app.use("/products", productRoutes);
 app.use("/users", userRoutes);
 app.use("/carts", cartRoutes);

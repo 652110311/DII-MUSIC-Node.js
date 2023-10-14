@@ -122,6 +122,7 @@ button[type="submit"]:hover {
   align-items: center;
   justify-content: center;
   margin-top: 5px;
+  overflow: hidden; /* เพิ่มบรรทัดนี้เพื่อซ่อนส่วนที่เกินขอบของ input file */
 }
 
 .plus-icon {
@@ -134,6 +135,13 @@ button[type="submit"]:hover {
   color: #555;
 }
 
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative; /* เพิ่มบรรทัดนี้เพื่อให้สามารถกำหนด z-index */
+  z-index: 0; /* กำหนดค่า z-index เพื่อให้รูปภาพอยู่ด้านหลังของ plus icon */
+}
 /* ---------------------Add block--------------------- */
 .add-box {
   background-color: #f4f4f4;

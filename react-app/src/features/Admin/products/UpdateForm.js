@@ -9,7 +9,7 @@ function UpdateForm() {
   const { id } = useParams();
   const products = useSelector((state) => state.products);
   const product = products.find((product) => product.id === Number(id));
-  const productImage = require(`../../../assets/${product.imageURL}`);
+  //const productImage = require(`../../../assets/${product.imageURL}`);
 
   const [name, setName] = useState(product.name);
   const [imageURL, setImageURL] = useState(product.imageURL);

@@ -68,7 +68,6 @@ export default styled(HomeAdmin)`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
     margin-right: -15px;
     margin-left: -15px;
   }
