@@ -6,9 +6,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Topbar from "../home/Topbar";
 
-function Address({
-  className,user,setUser,order,setOrder}) {
-
+function Address({ className, user, setUser, order, setOrder }) {
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [email, setemail] = useState("");
@@ -21,21 +19,35 @@ function Address({
   const navigate = useNavigate();
   let total = 0;
 
-  async function newOrder(idAddress){
-    const getOrder = await axios.get(`http://localhost:5000/orders/${user.id}/${user.orderId}`);
-    const {id,addressId,statusUser,statusAddmin,...other} = getOrder.data.order;
-    await axios.put(`http://localhost:5000/orders/${id}`,{...other,addressId:idAddress,statusUser:"TO SHIP",statusAddmin:"TO PAY"});    
+  async function newOrder(idAddress) {
+    const getOrder = await axios.get(
+      `http://localhost:5000/orders/${user.id}/${user.orderId}`
+    );
+    const { id, addressId, statusUser, statusAddmin, ...other } =
+      getOrder.data.order;
+    await axios.put(`http://localhost:5000/orders/${id}`, {
+      ...other,
+      addressId: idAddress,
+      statusUser: "TO SHIP",
+      statusAddmin: "TO PAY",
+    });
   }
 
-  async function newUser(){
+  async function newUser() {
     const getUser = await axios.get(`http://localhost:5000/users/${user.id}`);
-    const {id,orderId,...other} = getUser.data;
-    await axios.put(`http://localhost:5000/users/${id}`,{...other,orderId:orderId+1});    
+    const { id, orderId, ...other } = getUser.data;
+    await axios.put(`http://localhost:5000/users/${id}`, {
+      ...other,
+      orderId: orderId + 1,
+    });
 
-    await axios.post(`http://localhost:5000/orders`,{orderId:orderId+1,userId:user.id,total:0,statusUser:"TO PAY"})
-     
+    await axios.post(`http://localhost:5000/orders`, {
+      orderId: orderId + 1,
+      userId: user.id,
+      total: 0,
+      statusUser: "TO PAY",
+    });
   }
-
 
   function handleFileChange(event) {
     const file = event.target.files[0];
@@ -43,19 +55,12 @@ function Address({
       const reader = new FileReader();
       reader.onload = function (e) {
         const imagePath = e.target.result;
-        console.log('Image path: ', imagePath);
-        const shortenedPath = encodeURIComponent(imagePath); // ทำเป็นรหัสที่สั้น
-        setadd(shortenedPath);  // เก็บ URL ของภาพใน state
+        console.log("Image path: ", imagePath);
+        setadd(imagePath); // เก็บ URL ของภาพใน state
       };
       reader.readAsDataURL(file);
     }
   }
-  
-
-
- 
-  
-  
 
   async function addAddress(event) {
     event.preventDefault();
@@ -95,7 +100,10 @@ function Address({
     // }
 
     try {
-      const respone = await axios.post(`http://localhost:5000/address`,newAddress)
+      const respone = await axios.post(
+        `http://localhost:5000/address`,
+        newAddress
+      );
       newOrder(respone.data.id);
       newUser();
 
@@ -103,26 +111,21 @@ function Address({
       setUser(getUser.data);
 
       const getOrder = await axios.get(`http://localhost:5000/orders`);
-      setOrder(getOrder.data)
-
-        
+      setOrder(getOrder.data);
 
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Your work has been saved',
+        position: "center",
+        icon: "success",
+        title: "Your work has been saved",
         showConfirmButton: false,
-        timer: 1500
-
+        timer: 1500,
       }).then(() => {
-        navigate('/toPay');
+        navigate("/toPay");
       });
     } catch (error) {
       console.error("Error checkOut cart:", error);
     }
   }
-
-  
 
   return (
     <>
@@ -251,7 +254,6 @@ function Address({
                         accept="image/*"
                         onChange={handleFileChange}
                       />
-
                     </div>
                     <div className="col-md-12 form-group">
                       <div className="custom-control custom-checkbox">
@@ -278,7 +280,7 @@ function Address({
                   </div>
                   <div className="card-body">
                     <h5 className="font-weight-medium mb-3">Products</h5>
-                    
+
                     {/* {user.cart.length > 0 ? renderCartItems() : null} */}
 
                     <div className="card-footer border-secondary bg-transparent">
@@ -485,8 +487,8 @@ export default styled(Address)`
   .custom-control-input:disabled ~ .custom-control-label::before {
     background-color: #e9ecef;
   }
-  ------------------------------------------------------------
-    .custom-checkbox
+
+  .custom-checkbox
     .custom-control-input:checked
     ~ .custom-control-label::after {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e");
@@ -644,4 +646,4 @@ export default styled(Address)`
   .font-weight-semi-bold m-0 {
     width: 300px;
   }
-`
+`;

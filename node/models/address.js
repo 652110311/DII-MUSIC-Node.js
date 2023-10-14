@@ -29,7 +29,7 @@ const Address = sequelize.define(
             type: DataTypes.STRING
         },
         img: {
-            type: DataTypes.STRING(10000)
+            type: DataTypes.TEXT
         }
 
     });

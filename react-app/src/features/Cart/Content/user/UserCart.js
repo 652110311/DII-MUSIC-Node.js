@@ -7,9 +7,8 @@ import axios from "axios";
 import Topbar from "../../../home/Topbar";
 import Navbar from "../../../Cart/NavBar";
 
-function UserCart({ status, user, setUser,order,setOrder, className }) {
-  
-  const [total,setTotal] = useState(0);
+function UserCart({ status, user, setUser, order, setOrder, className }) {
+  const [total, setTotal] = useState(0);
 
   return (
     <>
@@ -21,38 +20,44 @@ function UserCart({ status, user, setUser,order,setOrder, className }) {
             <HeadContent userId={user.id} addminId={1} status={status} />
 
             {order.length > 0
-              ? order.map((item) => ( item.statusUser == status && item.userId == user.id && user.id!=1
-                ?(  <Order
-                    user={user}
-                    order={item}
-                    status={status}
-                    total={total}
-                    setTotal={setTotal}
-                    setOrder={setOrder}
-
+              ? order.map((item) =>
+                  item.statusUser == status &&
+                  item.userId == user.id &&
+                  user.id != 1 ? (
+                    <Order
+                      user={user}
+                      order={item}
+                      status={status}
+                      total={total}
+                      setTotal={setTotal}
+                      setOrder={setOrder}
                     />
-              ) : user.id == 1 && item.statusAddmin == status ? (  
-                <Order
-                  user={user}
-                  order={item}
-                  status={status}
-                  total={total}
-                  setTotal={setTotal}
-                  setOrder={setOrder}
-                />
-              ) : null))
+                  ) : user.id == 1 && item.statusAddmin == status ? (
+                    <Order
+                      user={user}
+                      order={item}
+                      status={status}
+                      total={total}
+                      setTotal={setTotal}
+                      setOrder={setOrder}
+                    />
+                  ) : null
+                )
               : null}
-
           </div>
         </div>
       </div>
 
       {order.length > 0
-        ? order.map((item) => ( item.statusUser == status && item.userId == user.id && status == "TO PAY" && user.id != 1 ?(
-          <Footer user={user} total={total}/>
-        ) : null))
-      : null}
-
+        ? order.map((item) =>
+            item.statusUser == status &&
+            item.userId == user.id &&
+            status == "TO PAY" &&
+            user.id != 1 ? (
+              <Footer key={item.id} user={user} total={total} />
+            ) : null
+          )
+        : null}
     </>
   );
 }
@@ -70,5 +75,4 @@ export default styled(UserCart)`
     flex-direction: column;
     justify-items: center;
   }
-
 `;
