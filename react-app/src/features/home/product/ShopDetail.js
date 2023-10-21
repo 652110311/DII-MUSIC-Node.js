@@ -3,9 +3,8 @@ import Footer from "../Footer";
 import { useParams } from "react-router-dom";
 import Topbar from "../Topbar";
 import axios from "axios";
-import React, { useState,useEffect } from "react";
-function ShopDetail({ products, user, setUser,url,total }) {
-
+import React, { useState, useEffect } from "react";
+function ShopDetail({ products, user, setUser, url, total }) {
   const { id } = useParams();
   const product = products.find((product) => product.id == id);
   const productImage = require(`../../../assets/${product.imageURL}`);
@@ -16,64 +15,80 @@ function ShopDetail({ products, user, setUser,url,total }) {
 
   const addQuantity = () => {
     setQuantity(quantity + 1);
-    
-};
+  };
 
-const deleteQuantity = () => {
-if (quantity > 1) {
-    setQuantity(quantity - 1);
-}
-};
-
-
-async function addCart() {
-try {
-  let newCart;
-  const { _id, cart, ...itemWithOutId } = user;
-  const cartToPay = user.cart.find((item) => item.productStatus === "TO PAY");
-
-  if (cartToPay) {
-    const orderInCart = cartToPay.order.find((orderItem) => orderItem.productId === product.id);
-    const filteredCart = user.cart.filter(
-      (inner) => inner.productStatus !== "TO PAY"
-    );
-    
-    if (orderInCart) {
-      // หากมีสินค้าที่มี productId เดียวกับ product.id ในตะกร้าให้เพิ่มปริมาณ
-      newCart = [...filteredCart,{
-        ...cartToPay,
-        order: cartToPay.order.map((orderItem) =>
-          orderItem.productId === product.id
-            ? { ...orderItem, quantity: orderItem.quantity + quantity }
-            : orderItem
-        ),
-        totalPrice: cartToPay.totalPrice+(product.price*quantity)
-      }];
-    } else {
-      // หากไม่มีสินค้าในตะกร้าที่มี productId เดียวกับ item.id ให้เพิ่มสินค้าใหม่
-      newCart = [...filteredCart,{
-        ...cartToPay,
-        order: [...cartToPay.order, { productId: product.id, quantity: quantity }],
-        totalPrice: cartToPay.totalPrice+(product.price*quantity)
-      }];
+  const deleteQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
     }
-  } else {
-    // ถ้าไม่มีสินค้าใน cartToPay ให้สร้างตะกร้าใหม่
-    newCart = [...cart,{
-      orderId: user.cart.length + 1,
-      order: [{ productId: product.id, quantity: quantity }],
-      productStatus: "TO PAY",
-      totalPrice: (product.price*quantity)
-    }];
+  };
+
+  async function addCart() {
+    try {
+      let newCart;
+      const { _id, cart, ...itemWithOutId } = user;
+      const cartToPay = user.cart.find(
+        (item) => item.productStatus === "TO PAY"
+      );
+
+      if (cartToPay) {
+        const orderInCart = cartToPay.order.find(
+          (orderItem) => orderItem.productId === product.id
+        );
+        const filteredCart = user.cart.filter(
+          (inner) => inner.productStatus !== "TO PAY"
+        );
+
+        if (orderInCart) {
+          // หากมีสินค้าที่มี productId เดียวกับ product.id ในตะกร้าให้เพิ่มปริมาณ
+          newCart = [
+            ...filteredCart,
+            {
+              ...cartToPay,
+              order: cartToPay.order.map((orderItem) =>
+                orderItem.productId === product.id
+                  ? { ...orderItem, quantity: orderItem.quantity + quantity }
+                  : orderItem
+              ),
+              totalPrice: cartToPay.totalPrice + product.price * quantity,
+            },
+          ];
+        } else {
+          // หากไม่มีสินค้าในตะกร้าที่มี productId เดียวกับ item.id ให้เพิ่มสินค้าใหม่
+          newCart = [
+            ...filteredCart,
+            {
+              ...cartToPay,
+              order: [
+                ...cartToPay.order,
+                { productId: product.id, quantity: quantity },
+              ],
+              totalPrice: cartToPay.totalPrice + product.price * quantity,
+            },
+          ];
+        }
+      } else {
+        // ถ้าไม่มีสินค้าใน cartToPay ให้สร้างตะกร้าใหม่
+        newCart = [
+          ...cart,
+          {
+            orderId: user.cart.length + 1,
+            order: [{ productId: product.id, quantity: quantity }],
+            productStatus: "TO PAY",
+            totalPrice: product.price * quantity,
+          },
+        ];
+      }
+
+      setUser({ ...user, cart: newCart });
+      await axios.put(`${url}/${user._id}`, {
+        ...itemWithOutId,
+        cart: newCart,
+      });
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   }
-
-  setUser({ ...user, cart: newCart });
-  await axios.put(`${url}/${user._id}`, { ...itemWithOutId, cart: newCart});
-
-} catch (error) {
-  console.error("Error adding to cart:", error);
-}
-}
 
   return (
     <>
@@ -89,16 +104,16 @@ try {
             >
               <div className="carousel-inner border">
                 <div className="carousel-item active">
-                  <img className="img-fluid w-100" src={home1}alt="" />
+                  <img className="img-fluid w-100" src={productImage} alt="" />
                 </div>
                 <div className="carousel-item">
-                  <img className="img-fluid w-100" src={home2}alt="" />
+                  <img className="img-fluid w-100" src={productImage} alt="" />
                 </div>
                 <div className="carousel-item">
-                  <img className="img-fluid w-100" src={home1}alt="" />
+                  <img className="img-fluid w-100" src={productImage} alt="" />
                 </div>
                 <div className="carousel-item">
-                  <img className="img-fluid w-100" src={home2}alt="" />
+                  <img className="img-fluid w-100" src={productImage} alt="" />
                 </div>
               </div>
               <a
@@ -134,11 +149,11 @@ try {
             <div className="d-flex mb-3">
               <p className="text-dark font-weight-medium mb-0 mr-3">Sound:</p>
               <div>
-            <audio controls>
-              <source src={productSound} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </div>
+                <audio controls>
+                  <source src={productSound} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
             </div>
             <div className="d-flex mb-4">
               <p className="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
@@ -173,7 +188,10 @@ try {
                 style={{ width: "130px" }}
               >
                 <div className="input-group-btn">
-                  <button onClick={deleteQuantity} className="btn btn-primary btn-minus">
+                  <button
+                    onClick={deleteQuantity}
+                    className="btn btn-primary btn-minus"
+                  >
                     <i className="fa fa-minus"></i>
                   </button>
                 </div>
@@ -183,7 +201,10 @@ try {
                   value={quantity}
                 />
                 <div className="input-group-btn">
-                  <button onClick={addQuantity} className="btn btn-primary btn-plus">
+                  <button
+                    onClick={addQuantity}
+                    className="btn btn-primary btn-plus"
+                  >
                     <i className="fa fa-plus"></i>
                   </button>
                 </div>
@@ -278,12 +299,12 @@ try {
                   invidunt tempor lorem, ipsum lorem elitr sanctus eirmod
                   takimata dolor ea invidunt.
                 </p>
-                  </div>
-                </div>
-              </div>                      
-                      </div>
-                    </div>
-                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Footer />
     </>
   );
