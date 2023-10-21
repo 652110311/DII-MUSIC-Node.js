@@ -1,0 +1,366 @@
+INSERT INTO "Products" (id, name, price, quantity, type, "imageURL", sound, description, "createdAt", "updatedAt")
+VALUES 
+(1,'Yamaha F310', 4290, 9, 'guitar', 'G1.png', 'guitar.mp3',
+  '{
+    "product": "This Yamaha acoustic guitar is considered the best-selling top hit model of all time...",
+    "brand": "Yamaha",
+    "series": "Yamaha F310",
+    "color": "Black,White",
+    "note": ""
+  }', NOW(), NOW()
+),
+  (2, 'Fender CD60s', 7600, 9, 'guitar', 'G2.png', 'guitar.mp3',
+    '{
+      "product": "If talking about the brand Fender, many people who are experienced in the guitar industry will probably hear this name often...",
+      "brand": "Fender",
+      "series": "Fender CD60s",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (3, 'Taylor Baby Taylor/BT1', 13300, 9, 'guitar', 'G3.png', 'guitar.mp3',
+    '{
+      "product": "Anyone who is looking for a mini guitar that can be used for a long time without having to change it often, recommend this Taylor Baby BT1 model...",
+      "brand": "Taylor",
+      "series": "Taylor Baby Taylor/BT1",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (4, 'Crafter HD-200CE', 6800, 9, 'guitar', 'G4.png', 'guitar.mp3',
+    '{
+      "product": "This body model is very eye-catching. Both design and shape Everything seems to fit together...",
+      "brand": "Crafter",
+      "series": "Crafter HD-200CE",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (5, 'Gusta GD130', 5940, 9, 'guitar', 'G5.png', 'guitar.mp3',
+    '{
+      "product": "Dreadnought style acoustic guitar, another popular brand among beginners as well...",
+      "brand": "Gusta",
+      "series": "Gusta GD130",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (6, 'Kazuki Deluxe DLKZ-41C', 15000, 9, 'guitar', 'G6.png', 'guitar.mp3',
+    '{
+      "product": "A beginner who is learning to play an acoustic guitar who is looking for a pocket-friendly price...",
+      "brand": "Kazuki Deluxe",
+      "series": "Kazuki Deluxe DLKZ-41C",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (7, 'Martin LX1', 14700, 9, 'guitar', 'G7.png', 'guitar.mp3',
+    '{
+      "product": "For vintage people who like to play acoustic music. Like a luxurious guitar with a full budget...",
+      "brand": "Martin",
+      "series": "Martin LX1",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (8, 'Epiphone EJ-200SCE', 15300, 9, 'guitar', 'G8.png', 'guitar.mp3',
+    '{
+      "product": "The legendary guitar brand that has been around since 1973 and is the guitar that many world-renowned artists use...",
+      "brand": "Epiphone",
+      "series": "Epiphone EJ-200SCE",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (9, 'Enya EMX1EQ', 4680, 9, 'guitar', 'G9.png', 'guitar.mp3',
+    '{
+      "product": "This guitar has a wood body that is more exotic than other models. Because this model is an orchestra model, it is compact and suitable for children as well...",
+      "brand": "Epiphone",
+      "series": "Enya EMX1EQ",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (10, 'Gusta GJB5-05', 10170, 9, 'bass', 'B1.jpeg', 'bass.mp3',
+    '{
+      "product": "5-string bass with active strength that comes with a tangible price. And this model will have a variety of material upgrades starting with an ash body, Canadian Roasted Maple neck, as well as a beautiful wood fingerboard, nut bone, and D''addario EXL 165-5 strings for a 5-string bass...",
+      "brand": "Gusta",
+      "series": "Gusta GJB5-05",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (11, 'Yamaha TRBX174', 8100, 9, 'bass', 'B2.jpeg', 'bass.mp3',
+    '{
+      "product": "Yamaha TRBX174 bass, basic model, affordable price and get complete usage The body is mahogany that produces a good bass tone...",
+      "brand": "Yamaha",
+      "series": "Yamaha TRBX174",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (12, 'Cort C4 Plus ZBMH', 9775, 9, 'bass', 'B3.jpeg', 'bass.mp3',
+    '{
+      "product": "Sleek, beautiful, elegant, these are the three words that describe this Cort C4 Plus ZBMH very well...",
+      "brand": "Cort",
+      "series": "Cort C4 Plus ZBMH",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (13, 'Sire Marcus Miller M2DX', 9450, 9, 'bass', 'B4.jpeg', 'bass.mp3',
+    '{
+      "product": "The Sire Marcus Miller M2DX electric bass is the signature bass of Marcus Miller, renowned jazz bassist, composer and producer...",
+      "brand": "Sire Marcus",
+      "series": "Sire Marcus Miller M2DX",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (14, 'Squier Affinity PJ Bass', 8350, 9, 'bass', 'B5.jpeg', 'bass.mp3',
+    '{
+      "product": "This Squier Affinity PJ Bass has two single-coil pickups that come in different styles. which, if you like a jazz sound, can be adjusted to be an intermediate pickup...",
+      "brand": "Squier Affinity PJ Bass",
+      "series": "Squier Affinity PJ Bass",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (15, 'Ibanez TMB35', 9000, 9, 'bass', 'B6.jpeg', 'bass.mp3',
+    '{
+      "product": "The Ibanez TMB35 is a good 5-string bass in the Talman series. This model will have a scale length of only 30 inches, easy to play, suitable for small people or those who do not like long bass...",
+      "brand": "Ibanez",
+      "series": "Ibanez TMB35",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (16, 'Schecter SGR C-4', 9775, 9, 'bass', 'B7.jpeg', 'bass.mp3',
+    '{
+      "product": "The Schecter SGR C-4 is a standard 4-string bass with a sleek black finish from Schecter''s sub-brand, SGR, which is known for its rock-and-roll instruments...",
+      "brand": "Schecter",
+      "series": "Schecter SGR C-4",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (17, 'Ibanez GSR200B', 9900, 9, 'bass', 'B8.jpeg', 'bass.mp3',
+    '{
+      "product": "The Ibanez GSR200B is a 4-string bass that is sleek and elegant. Enyoto wooden body Beautiful, see the wood pattern...",
+      "brand": "Ibanez",
+      "series": "Ibanez GSR200B",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (18, 'Squier Jazz Bass', 9900, 9, 'bass', 'B9.jpeg', 'bass.mp3',
+    '{
+      "product": "The Squier Jazz Bass comes with a beautiful shape in a jazz style. The woodwork is meticulously detailed, using poplar wood that produces a grainy sound...",
+      "brand": "ISquier Jazz Bass",
+      "series": "Squier Jazz Bass",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (19, 'Yamaha P-125', 29900, 9, 'piano', 'P1.jpeg', 'piano.mp3',
+    '{
+      "product": "Yamaha P-125, a new electric piano from Yamaha, is a model developed from the P-115...",
+      "brand": "Yamaha P-125",
+      "series": "Yamaha",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (20, 'Yamaha P-125', 29900, 9, 'piano', 'P2.jpeg', 'piano.mp3',
+    '{
+      "product": "Yamaha P-125, a new electric piano from Yamaha, is a model developed from the P-115...",
+      "brand": "Yamaha ",
+      "series": "Yamaha P-125",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (21, 'Kawai KDP75 Digital Piano', 32500, 9, 'piano', 'P3.jpeg', 'piano.mp3',
+    '{
+      "product": "The Kawai KDP75 Digital Piano offers great grand piano touch and tone at an affordable price...",
+      "brand": "Kawai ",
+      "series": "Kawai KDP75 Digital Piano ",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (22, 'Coleman F107', 11800, 9, 'piano', 'P4.jpeg', 'piano.mp3',
+    '{
+      "product": "The Coleman F107 electric piano is ideal for those looking for an affordable electric piano...",
+      "brand": "Coleman  ",
+      "series": "Coleman F107",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (23, 'Coleman F201', 13900, 9, 'piano', 'P5.jpeg', 'piano.mp3',
+    '{
+      "product": "Coleman F201, a quality electric piano at a great price from the Coleman brand...",
+      "brand": "Coleman  ",
+      "series": "Coleman F201",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (24, 'Casio PX-S1100', 28900, 9, 'piano', 'P6.jpeg', 'piano.mp3',
+    '{
+      "product": "Casio PX-S1100, the ever-evolving electric piano Sleek, distinctive design that fits in any space with hammer mechanism...",
+      "brand": "Casio",
+      "series": "Casio PX-S1100 ",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (25, 'Coleman F401BT', 18900, 9, 'piano', 'P7.jpeg', 'piano.mp3',
+    '{
+      "product": "Coleman F401BT Electric piano, fully functional, from the Coleman brand that used to produce many models of inexpensive pianos...",
+      "brand": "Coleman",
+      "series": "Coleman F401BT",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (26, 'Yamaha P45', 18900, 9, 'piano', 'P8.jpeg', 'piano.mp3',
+    '{
+      "product": "Yamaha P45 Electric piano, fully functional, from the Yamaha P45 brand that used to produce many models of inexpensive pianos...",
+      "brand": "Yamaha",
+      "series": "Yamaha P45",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (27, 'NUX WK-310', 20900, 9, 'piano', 'P9.jpeg', 'piano.mp3',
+    '{
+      "product": "NUX WK-310 Entry-level electric piano It gives you the ultimate piano playing feel with 5 levels of grand piano sounds...",
+      "brand": "NUX",
+      "series": "NUX WK-310",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (28, 'Hofner H5G', 18000, 9, 'violin', 'V1.jpeg', 'violin.mp3',
+    '{
+      "product": "When it comes to the most popular brand of violins. Everyone thinks of the German Hofner violin...",
+      "brand": "Hofner",
+      "series": "Hofner H5G",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (29, 'Sandner 306 - SV6', 7000, 9, 'violin', 'V2.jpeg', 'violin.mp3',
+    '{
+      "product": "A well-known brand of violin made by a skilled German craftsman...",
+      "brand": "Sandner",
+      "series": "Sandner 306 - SV6",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (30, 'YAMAHA V5SA', 14900, 9, 'violin', 'V3.png', 'violin.mp3',
+    '{
+      "product": "This brand of violin is a brand that is widely popular both in Thailand and abroad...",
+      "brand": "YAMAHA ",
+      "series": "YAMAHA V5SA",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (31, 'Elman EL100', 5490, 9, 'violin', 'V4.jpeg', 'violin.mp3',
+    '{
+      "product": "This brand of violin is suitable for people who want to practice playing classical music...",
+      "brand": "Elman",
+      "series": "Elman EL100",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (32, 'YAMAHA V3SKA', 10400, 9, 'violin', 'V5.png', 'violin.mp3',
+    '{
+      "product": "A popular brand of violin that is internationally recognized for its excellent quality...",
+      "brand": "YAMAHA",
+      "series": "YAMAHA V3SKA",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (33, 'Nakovitz VN110', 5050, 9, 'violin', 'V6.jpeg', 'violin.mp3',
+    '{
+      "product": "The most popular violin brand for beginner violin players...",
+      "brand": "Nakovitz",
+      "series": "Nakovitz VN110",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (34, 'SYNWIN SV441005', 4900, 9, 'violin', 'V7.jpeg', 'violin.mp3',
+    '{
+      "product": "SYNWIN brand violin is a brand from Singapore...",
+      "brand": "SYNWIN",
+      "series": "SYNWIN SV441005",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (35, 'Overtone OV150', 2200, 9, 'violin', 'V8.jpeg', 'violin.mp3',
+    '{
+      "product": "Another affordable violin option that perfect for beginners...",
+      "brand": "Overtone",
+      "series": "Overtone OV150",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (36, 'Overtone OV150', 2200, 9, 'violin', 'V9.jpeg', 'violin.mp3',
+    '{
+      "product": "Another affordable violin option that perfect for beginners...",
+      "brand": "Overtone",
+      "series": "Overtone OV150",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (37, 'Gusta First Touring', 8900, 9, 'drum', 'D1.jpeg', 'drum.mp3',
+    '{
+      "product": "An affordable drum set with excellent quality. The drum body is made of poplarwood 6ply for a clearer sound...",
+      "brand": "Gusta First Touring",
+      "series": "Gusta First Touring",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (38, 'Overdrive', 8900, 9, 'drum', 'D2.jpeg', 'drum.mp3',
+    '{
+      "product": "A drum set made by Thai people. It is a good quality drum set with 5 standard size drums...",
+      "brand": "Overdrive",
+      "series": "Overdrive",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (39, 'Gusta Premier', 9900, 9, 'drum', 'D3.jpeg', 'drum.mp3',
+    '{
+      "product": "Gusta Premier that comes with Hardware & Cymble is not enough, there is also a Remo drum skin...",
+      "brand": "Gusta Premier",
+      "series": "Gusta Premier",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (40, 'Mapex Prodigy', 13900, 9, 'drum', 'D4.jpeg', 'drum.mp3',
+    '{
+      "product": "Presenting Mapex Prodigy, a complete 5-piece drum set that comes with Hardware, Cymble...",
+      "brand": "Mapex Prodigy",
+      "series": "Mapex Prodigy",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (41, 'Mapex Prodigy', 13900, 9, 'drum', 'D5.jpeg', 'drum.mp3',
+    '{
+      "product": "Presenting Mapex Prodigy, a complete 5-piece drum set that comes with Hardware, Cymble...",
+      "brand": "Mapex Prodigy",
+      "series": "Mapex Prodigy",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (42, 'Ludwig Accent Series', 15300, 9, 'drum', 'D6.jpeg', 'drum.mp3',
+    '{
+      "product": "The Ludwig Accent Series is a built-in drum set that has everything you need and does not cost anything extra...",
+      "brand": "Ludwig Accent Series",
+      "series": "Ludwig Accent Series",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (43, 'Cmc Indy Series', 18500, 9, 'drum', 'D7.jpeg', 'drum.mp3',
+    '{
+      "product": "Cmc Indy Series that comes with quality and colors that are very beautiful...",
+      "brand": "Cmc Indy Series",
+      "series": "Cmc Indy Series",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (44, 'Cmc Indy Series', 18500, 9, 'drum', 'D8.jpeg', 'drum.mp3',
+    '{
+      "product": "Cmc Indy Series that comes with quality and colors that are very beautiful...",
+      "brand": "Cmc Indy Series",
+      "series": "Cmc Indy Series",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW()),
+  (45, 'Pearl Road Show', 18000, 9, 'drum', 'D9.jpg', 'drum.mp3',
+    '{
+      "product": "Pearl Road Show 5-piece drum set that comes with Hardware, Cymble...",
+      "brand": "Pearl Road Show",
+      "series": "Pearl Road Show",
+      "color": "Black,White",
+      "note": ""
+    }', NOW(), NOW());
+
+
+

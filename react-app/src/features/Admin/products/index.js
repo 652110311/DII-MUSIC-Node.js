@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { updateProduct, deleteProduct } from "./actions";
+import { deleteProduct } from "./actions";
 import styled from "styled-components";
 function Product({ item, className }) {
   const productImage = require(`../../../assets/${item.imageURL}`); //syntax commonjs import dynamic file
@@ -186,7 +186,7 @@ export default styled(Product)`
     border-right: 1px solid #edf1ff;
     flex: 1 1 auto;
     min-height: 1px;
-  e}
+  }
 
   .text-truncate {
     overflow: hidden;
