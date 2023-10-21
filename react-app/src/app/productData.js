@@ -8,12 +8,12 @@ const dataProduct = [
     imageURL: "G1.png",
     sound: "guitar.mp3",
     description: {
-      "product":
+      product:
         "This Yamaha acoustic guitar is considered the best-selling top hit model of all time. With a design that has a standard design and fits every body. Because it is a Japanese brand guitar, it is specially designed for Asian people. The body is comfortable to hold It also has a black glossy edge trim that makes the body stand out even more. As for the sound of this model, it is resonant, so it is suitable for people who like to play chords and are very beginners as it is a Yamaha brand that produces a wide range of musical instruments. Therefore, you can be confident about the quality that is definitely worth the price.",
-      "brand": "Yamaha",
-      "series": "Yamaha F310",
-      "color": "Black,White",
-      "note": "",
+      brand: "Yamaha",
+      series: "Yamaha F310",
+      color: "Black,White",
+      note: "",
     },
   },
   {
@@ -464,7 +464,7 @@ const dataProduct = [
     price: 18000,
     quantity: 9,
     type: "violin",
-    imageURL: "V1.jpeg",
+    imageURL: "V1.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -481,7 +481,7 @@ const dataProduct = [
     price: 7000,
     quantity: 9,
     type: "violin",
-    imageURL: "V2.jpeg",
+    imageURL: "V2.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -498,7 +498,7 @@ const dataProduct = [
     price: 14900,
     quantity: 9,
     type: "violin",
-    imageURL: "V3.png",
+    imageURL: "V3.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -515,7 +515,7 @@ const dataProduct = [
     price: 5490,
     quantity: 9,
     type: "Violin",
-    imageURL: "V4.jpeg",
+    imageURL: "V4.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -532,7 +532,7 @@ const dataProduct = [
     price: 10400,
     quantity: 9,
     type: "violin",
-    imageURL: "V5.png",
+    imageURL: "V5.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -549,7 +549,7 @@ const dataProduct = [
     price: 5050,
     quantity: 9,
     type: "violin",
-    imageURL: "V6.jpeg",
+    imageURL: "V6.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -583,7 +583,7 @@ const dataProduct = [
     price: 2200,
     quantity: 9,
     type: "violin",
-    imageURL: "V8.jpeg",
+    imageURL: "V8.jpg",
     sound: "violin.mp3",
     description: {
       product:
@@ -600,7 +600,7 @@ const dataProduct = [
     price: 2200,
     quantity: 9,
     type: "violin",
-    imageURL: "V9.jpeg",
+    imageURL: "V9.jpg",
     sound: "violin.mp3",
     description: {
       product:
