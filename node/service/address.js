@@ -1,13 +1,18 @@
-const express = require("express");
-const router = express.Router();
 const Address = require("../models/address");
 
-router.get("/", async (req, res) => {
+async function findAddresses(req, res) {
   const address = await Address.findAll();
   res.send(address);
-});
-
-router.post("/", async (req, res) => {
+}
+async function findAddress(req, res) {
+  const address = await Address.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+  res.json(address);
+}
+async function newAddress(req, res) {
   const { firstname, lastname, email, mobile, address, city, state, zip, img } =
     req.body;
   try {
@@ -28,15 +33,9 @@ router.post("/", async (req, res) => {
     console.log("error");
     console.error(error);
   }
-});
-
-router.get("/:id", async (req, res) => {
-  const address = await Address.findOne({
-    where: {
-      id: req.params.id,
-    },
-  });
-  res.json(address);
-});
-
-module.exports = router;
+}
+module.exports = {
+    findAddress,
+    findAddresses,
+    newAddress
+};

@@ -1,13 +1,12 @@
-const express = require('express');
-const router = express.Router();
+
 const Order = require('../models/orders')
 
-router.get('/', async (req, res) => {
+async function findOrders(req,res){
     const order = await Order.findAll();
     res.send(order);
-});
+}
 
-router.post('/', async (req, res) => {
+async function newOrder(req,res){
     const {orderId,userId,total,addressId,transport,tracking,statusUser,statusAddmin} = req.body;
     console.log(req.body);
     const newOrder = await Order.create({
@@ -21,18 +20,20 @@ router.post('/', async (req, res) => {
       statusAddmin,
     });
     res.json(newOrder);
-});
+}
 
-router.get('/:id', async (req, res) => {
+async function findOrder(req,res){
     const order = await Order.findOne({
-      where: {
-        id: req.params.id
-      }
-    });
-    res.json(order);
-  });
+        where: {
+          id: req.params.id
+        }
+      });
+      res.json(order);
+}
 
-  router.get('/:userId/:orderId', async (req, res) => {
+
+
+  async function findOrderByUser(req,res){
     const { userId, orderId } = req.params;
       const order = await Order.findOne({
         where: {
@@ -46,10 +47,9 @@ router.get('/:id', async (req, res) => {
       } else {
         res.status(404).json({ message: 'Order not found.' });
       }
-    
-  });
+}
 
-  router.put('/:id', async (req, res) => {
+async function editOrder(req,res){
     const { orderId,userId,total,addressId,transport,tracking,statusUser,statusAddmin } = req.body;
     const order = await Order.findOne({
       where: {
@@ -69,9 +69,14 @@ router.get('/:id', async (req, res) => {
     await order.save();
   
     res.json(order);
-  });
-  
-module.exports = router;
+}
+
+
+
+
+module.exports = {
+    findOrder,findOrders,newOrder,findOrderByUser,editOrder
+};
 
 
 

@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const productRoutes = require("./routes/products");
-const userRoutes = require("./routes/users");
-const cartRoutes = require("./routes/carts");
-const addressRoutes = require("./routes/address");
-const orderRoutes = require("./routes/orders");
-const summaryRoutes = require("./routes/summary");
+const productRoutes = require("./controller/products");
+const userRoutes = require(".//controller/users");
+const cartRoutes = require("./controller/carts");
+const addressRoutes = require("./controller/address");
+const orderRoutes = require("./controller/orders");
+const summaryRoutes = require("./controller/summary");
 const { connect, sync } = require("./config/database");
 
 // Setting up middleware

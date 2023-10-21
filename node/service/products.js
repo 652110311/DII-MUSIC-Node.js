@@ -1,22 +1,18 @@
-const express = require("express");
-const router = express.Router();
 const Product = require("../models/products");
 
-router.get("/", async (req, res) => {
+async function findProducts(req, res) {
   const products = await Product.findAll();
   res.json(products);
-});
-
-router.get("/:id", async (req, res) => {
+}
+async function findProduct(req, res) {
   const product = await Product.findOne({
     where: {
       id: req.params.id,
     },
   });
   res.json(product);
-});
-
-router.post("/", async (req, res) => {
+}
+async function newProduct(req, res) {
   const { name, price, quantity, type, imageURL, sound, description } =
     req.body;
   const product = await Product.create({
@@ -29,9 +25,8 @@ router.post("/", async (req, res) => {
     description,
   });
   res.json(product);
-});
-
-router.put("/:id", async (req, res) => {
+}
+async function editProduct(req, res) {
   const { name, price, quantity, type, imageURL, sound, description } =
     req.body;
   const product = await Product.findOne({
@@ -51,15 +46,20 @@ router.put("/:id", async (req, res) => {
   await product.save();
 
   res.json(product);
-});
-
-router.delete("/:id", async (req, res) => {
+}
+async function deleteProduct(req, res) {
   await Product.destroy({
     where: {
       id: req.params.id,
     },
   });
   res.sendStatus(204);
-});
+}
 
-module.exports = router;
+module.exports = {
+  findProduct,
+  findProducts,
+  newProduct,
+  editProduct,
+  deleteProduct,
+};
